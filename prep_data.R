@@ -7,7 +7,7 @@ library(readr)
 
 # Also https://talks.cpsievert.me/20180202/#11
 
-summary_table <- read_excel("original-data/summary-table_linux_AN_tg.xlsx")
+summary_table <- read_excel("original-data/summary-table_linux_AN_CORR.xlsx")
 
 regions <- c("TM1","TM2","TM3","TM4","TM5","TM6","TM7","ECL1","ECL3")
 
