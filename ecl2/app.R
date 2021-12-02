@@ -41,7 +41,6 @@ ui <- fluidPage(
     h2("Results"),
 
     DT::dataTableOutput("table")
-)
 
 
 

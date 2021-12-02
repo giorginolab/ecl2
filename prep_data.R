@@ -26,4 +26,4 @@ for (r in regions) {
     st[[c.out2]][same.be] <- st[[c.out1]][same.be]
 }
 
-save(st, file="data/summary-table.RData")
+save(st, file="ecl2app/data/summary-table.RData")
