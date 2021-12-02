@@ -15,22 +15,26 @@ cls <- sort(unique(st1$Cluster))
 ui <- fluidPage(
 
     # Application title
-    titlePanel("ECL2 summary table"),
-    p("This interactive view accompanies the paper:"),
-    p("A. Di Pizio et al.,",em("Shapes of the Second Extracellular Loop of Class A GPCRs Characterized by Clustering and Intramolecular Interaction Analyses, "),
+    titlePanel("A classification system for GPCR ECL2 domains based on intramolecular interactions"),
+    h3("Abstract"),
+    p("The extracellular loop 2 (ECL2) is the longest and the most diverse loop among class A G protein-coupled receptors (GPCRs). We propose a 7-cluster classification of currently resolved ECL2 domains on the basis of their intermolecular interactions with the other GPCR regions."),
+    h3("Reference"),
+    # p("This interactive view accompanies the paper:"),
+    p("See: A. Di Pizio et al.,",em("Shapes of the Second Extracellular Loop of Class A GPCRs Characterized by Clustering and Intramolecular Interaction Analyses, "),
       "Under review."),
     
-    fluidRow(
-        column(4,
-               selectInput("selected.cluster",
-                           label="Selected ECL2 cluster",
-                           choices = c("All",cls))
-               )
-    ),
+    sidebarLayout(
+        sidebarPanel(
+            selectInput("selected.cluster",
+                        label="Selected ECL2 cluster",
+                        choices = c("All",cls)),
+            p("Distinct clusters A to G have been assigned on the basis of volumetric overlaps. See the paper for details.")
+        ),
+        mainPanel(
+            tableOutput("table")
+        )
+    )
     
-    h2("Results"),
-
-    tableOutput("table")
 )
 
 
