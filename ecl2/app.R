@@ -16,7 +16,9 @@ ui <- fluidPage(
 
     # Application title
     titlePanel("ECL2 summary table"),
-    p("Write description here"),
+    p("This interactive view accompanies the paper:"),
+    p("A. Di Pizio et al.,",em("Shapes of the Second Extracellular Loop of Class A GPCRs Characterized by Clustering and Intramolecular Interaction Analyses, "),
+      "Under review."),
     
     fluidRow(
         column(4,
