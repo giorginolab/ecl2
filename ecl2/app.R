@@ -13,7 +13,7 @@ cls <- sort(unique(st1$Cluster))
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-
+    
     # Application title
     titlePanel("A classification system for GPCR ECL2 domains based on intramolecular interactions"),
     h3("Abstract"),
@@ -23,19 +23,25 @@ ui <- fluidPage(
     p("See: A. Di Pizio et al.,",em("Shapes of the Second Extracellular Loop of Class A GPCRs Characterized by Clustering and Intramolecular Interaction Analyses, "),
       "Under review."),
     
-    sidebarLayout(
-        sidebarPanel(
-            selectInput("selected.cluster",
-                        label="Selected ECL2 cluster",
-                        choices = c("All",cls)),
-            p("Distinct clusters A to G have been assigned on the basis of volumetric overlaps. See the paper for details.")
-        ),
-        mainPanel(
-            tableOutput("table")
-        )
-    )
+    h3("Query the ECL2 clusters"),
     
+    fluidRow(
+        column(4,
+               wellPanel(
+                   selectInput("selected.cluster",
+                               label="Selected ECL2 cluster",
+                               choices = c("All",cls)),
+                   p("Distinct clusters A to G have been assigned on the basis of volumetric overlaps. See the paper for details.")
+               )),
+        column(8,
+               h5("Plot goes here")
+        )
+    ),
+    h3("Summary of selected GPCRs"),
+    tableOutput("table")
 )
+
+
 
 
 
