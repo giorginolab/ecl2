@@ -23,14 +23,14 @@ ui <- fluidPage(
     fluidRow(
         column(4,
                selectInput("selected.cluster",
-                           label="Select ECL2 cluster",
+                           label="Selected ECL2 cluster",
                            choices = c("All",cls))
                )
     ),
     
     h2("Results"),
 
-    DT::dataTableOutput("table")
+    tableOutput("table")
 )
 
 
@@ -38,7 +38,7 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
-    output$table <- DT::renderDataTable(DT::datatable({
+    output$table <- renderTable({
       if(input$selected.cluster=="All") {
           r <- st1
       } else {
@@ -53,7 +53,10 @@ server <- function(input, output) {
                  `Contacts with TM7`,
                  `Length of segment before-Cys45.50`,`Length of segment after-Cys45.50`
           ) 
-    }, escape=FALSE))
+    }, 
+    rownames=TRUE,
+    striped=TRUE, hover=TRUE,
+    sanitize.text.function = function(x) x)
     
 }
 
