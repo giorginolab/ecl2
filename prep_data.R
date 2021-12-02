@@ -4,6 +4,7 @@ library(readxl)
 
 # for i in *.tif; do convert $i ${i%.tif}.png; done
 
+# Also https://talks.cpsievert.me/20180202/#11
 
 summary_table <- read_excel("data/summary-table_linux_AN_tg.xlsx")
 

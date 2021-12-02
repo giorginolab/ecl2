@@ -14,7 +14,7 @@ st1 <- st %>% select(-c(`Lenght of segment before-Cys45.50`,
     relocate(Cluster, GPCR, Structure, ECL2) %>%
     arrange(Cluster)
 
-
+st1$Structure[st1$Structure=="B"] <- "FIXME"
 
 
 #st[["Lenght of segment before-Cys45.50"]]<-NULL
@@ -41,7 +41,7 @@ ui <- fluidPage(
     h2("Results"),
 
     DT::dataTableOutput("table")
-
+)
 
 
 
