@@ -5,9 +5,10 @@ account: mysec
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5247395
-bundleId: 5316801
+bundleId: 5316833
 url: https://mysec.shinyapps.io/ecl2/
-when: 1638402361.6099
-lastSyncTime: 1638402361.60991
+when: 1638403143.23941
+lastSyncTime: 1638403143.23943
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: no-www
