@@ -1,24 +1,12 @@
 library(shiny)
 library(dplyr)
-library(stringr)
 
 load("data/summary-table.RData")
 
 # Misspelled
 
-st1 <- st %>% select(-c(`Lenght of segment before-Cys45.50`, 
-                        `Lenght of segment before-Cys45.50`,
-                        `Structures within this structure's cluster`)) %>%
-    mutate(Structure=str_replace(Structure,".tif","")) %>%
-    rename(Cluster=`Cluster (based on Volume overlaps)`) %>%
-    relocate(Cluster, GPCR, Structure, ECL2) %>%
-    arrange(Cluster)
+st1 <- st
 
-st1$Structure[st1$Structure=="B"] <- "FIXME"
-
-
-#st[["Lenght of segment before-Cys45.50"]]<-NULL
-#st[["Lenght of segment after-Cys45.50"]]<-NULL
 
 cls <- sort(unique(st1$Cluster))
 
@@ -55,7 +43,14 @@ server <- function(input, output) {
           r <- st1 %>% filter(Cluster==input$selected.cluster)
       }
       r %>% 
-          mutate(Structure=sprintf('<a href="figures/%s.pdb" target=”_blank”>%s</a',Structure,Structure)) 
+          mutate(ID=sprintf('<a href="figures/%s.pdb" target=”_blank”>%s</a',Structure,ID)) %>%
+          select(ID,Cluster,GPCR,ECL2,
+                 `Contacts with TM1`,`Contacts with TM2`,`Contacts with ECL1`,
+                 `Contacts with TM3`,`Contacts with TM4`,`Contacts with TM5`,
+                 `Contacts with ECL3`,`Contacts with TM6`,
+                 `Contacts with TM7`,
+                 `Length of segment before-Cys45.50`,`Length of segment after-Cys45.50`
+          ) 
     }, escape=FALSE))
     
 }
