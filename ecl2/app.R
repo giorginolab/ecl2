@@ -84,12 +84,10 @@ server <- function(input, output) {
                                     x = 4, y = 25, size=8,
                                     label="Please select a cluster") + theme_void()
             } else {
+                # csub <- contacts %>% filter(Frame>0 & Cluster=="C")
                 csub <- contacts %>% filter(Frame>0)
                 csub <- csub %>% filter(Cluster == input$selected.cluster)
-                ggplot(csub, 
-                       aes(x=Frame,y=Contacts,color=ID))+
-                    geom_line()+
-                    facet_wrap(~Region)
+                ggplot(csub, aes(x=Region,y=Contacts,color=ID,fill=ID))+geom_boxplot(alpha=0.3)
             }
         } else {
             if(input$selected.cluster == "All") {
