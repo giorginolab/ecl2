@@ -1,5 +1,6 @@
 library(shiny)
 library(dplyr)
+library(ggplot2)
 
 load("data/summary-table.RData")
 
@@ -31,10 +32,14 @@ ui <- fluidPage(
                    selectInput("selected.cluster",
                                label="Selected ECL2 cluster",
                                choices = c("All",cls)),
-                   p("Distinct clusters A to G have been assigned on the basis of volumetric overlaps. See the paper for details.")
+                   p("Distinct clusters A to G have been assigned on the basis of volumetric overlaps. See the paper for details."),
+                   radioButtons("dynamic", label = "Data set",
+                                choices = list("GPCRmd (molecular dynamics)" = 1, "RCSB PDB (experimental)" = 2), 
+                                selected = 1),
+                   
                )),
         column(8,
-               h5("Plot goes here")
+               plotOutput('plot')
         )
     ),
     h3("Summary of selected GPCRs"),
@@ -67,6 +72,36 @@ server <- function(input, output) {
     rownames=TRUE,
     striped=TRUE, hover=TRUE,
     sanitize.text.function = function(x) x)
+    
+    output$plot <- renderPlot({
+        if(input$dynamic==1) {
+            if(input$selected.cluster == "All" ||
+               input$selected.cluster == "F") {
+                ggplot() + annotate("text",
+                                    x = 4, y = 25, size=8,
+                                    label="Please select a cluster") + theme_void()
+            } else {
+                csub <- contacts %>% filter(Frame>0)
+                csub <- csub %>% filter(Cluster == input$selected.cluster)
+                ggplot(csub, 
+                       aes(x=Frame,y=Contacts,color=ID))+
+                    geom_line()+
+                    facet_wrap(~Region)
+            }
+        } else {
+            if(input$selected.cluster == "All") {
+                ggplot() + annotate("text",
+                                    x = 4, y = 25, size=8,
+                                    label="Please select a cluster") + theme_void()
+            } else {
+                csub <- contacts %>% filter(Frame==-1)
+                csub <- csub %>% filter(Cluster == input$selected.cluster)
+                ggplot(csub, aes(color=ID,y=Contacts,x=Region))+geom_point()
+            }  
+        }
+        
+        
+    })
     
 }
 
