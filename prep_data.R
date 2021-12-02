@@ -1,6 +1,7 @@
 library(dplyr)
 library(tidyr)
 library(readxl)
+library(readr)
 
 # for i in *.tif; do convert $i ${i%.tif}.png; done
 
@@ -39,5 +40,36 @@ st <- st %>% select(-c(`Lenght of segment before-Cys45.50`,
     arrange(Cluster)
 
 
+clusterOfID<-setNames(st$Cluster, st$ID)
 
-save(st, file="ecl2/data/summary-table.RData")
+
+dfXl <- list()
+dfFl <- list()
+
+for (reg in regions) {
+    tmp <- read_csv(sprintf("original-data/MD_ECL2_contacts/%s.csv", reg), 
+                    skip = 1, show_col_types = FALSE)
+    tmpX <- head(tmp,1)
+    dfX <- gather(tmpX, ID, Contacts)
+    dfX$Region <- reg
+    dfX$Frame <- -1
+    dfXl[[reg]] <- dfX
+    
+    tmpF <- tmp[-1,]
+    tmpF$Frame <- seq_along(tmpF[[1]])
+    dfF <- gather(tmpF,ID, Contacts, -Frame)
+    dfF$Region <- reg
+    dfFl[[reg]] <- dfF
+}
+
+contactsF <- do.call("rbind",dfFl)
+contactsX <- do.call("rbind",dfXl)
+
+contacts <- rbind(na.omit(contactsF),contactsX)
+contacts$Cluster <- clusterOfID[contacts$ID]
+
+
+save(st, contacts, file="ecl2/data/summary-table.RData")
+
+
+
