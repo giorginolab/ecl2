@@ -7,11 +7,6 @@ load("data/summary-table.RData")
 st1 <- st
 cls <- sort(unique(st1$Cluster))
 
-# https://stackoverflow.com/questions/27004136/position-popup-image-on-mouseover
-# http://jsfiddle.net/4hzenxkh/1/
-mkhoverlink <- function(txt,img) {
-    sprintf('<span class="ecl2img"><a href="#"><img src="figures/%s.png" alt=""/>%s</a></span>', img, txt)
-}
 
 
 # Define UI for application that draws a histogram
@@ -58,6 +53,12 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
+    # https://stackoverflow.com/questions/27004136/position-popup-image-on-mouseover
+    # http://jsfiddle.net/4hzenxkh/1/
+    mkhoverlink <- function(txt,img) 
+        sprintf('<span class="ecl2img"><a><img src="figures/%s.png" alt=""/>%s</a></span>', img, txt)
+    
+    
     output$table <- renderTable({
       if(input$selected.cluster=="All") {
           r <- st1
@@ -65,8 +66,8 @@ server <- function(input, output) {
           r <- st1 %>% filter(Cluster==input$selected.cluster)
       }
       r %>% 
-          mutate(ID=sprintf('<a href="figures/%s.pdb" target=”_blank”>%s</a',Structure,ID)) %>%
-          mutate(ECL2=mkhoverlink(ECL2,Structure)) %>%
+          mutate(ID=sprintf('<a href="figures/%s.pdb" target=”_blank”>%s</a',Structure,ID),
+                 ECL2=mkhoverlink(ECL2,Structure)) %>%
           select(ID,Cluster,GPCR,ECL2,
                  `Contacts with TM1`,`Contacts with TM2`,`Contacts with ECL1`,
                  `Contacts with TM3`,`Contacts with TM4`,`Contacts with TM5`,
