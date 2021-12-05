@@ -1,0 +1,18 @@
+span.ecl2img a img {
+    display: none;
+    position: absolute;
+    left: 80px;
+    top: -22px;
+}
+span.ecl2img a {
+    display: inline-block;
+    position: relative;
+}
+span.ecl2img a img{
+    display: none;
+    width: 50vw;
+    border: 5px solid #555;
+}
+span.ecl2img a:hover img{
+    display: inherit;
+}
