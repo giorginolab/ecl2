@@ -2,6 +2,7 @@ library(dplyr)
 library(tidyr)
 library(readxl)
 library(readr)
+library(stringr)
 
 # for i in *.tif; do convert $i ${i%.tif}.png; done
 
