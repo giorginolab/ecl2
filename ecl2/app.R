@@ -20,9 +20,11 @@ ui <- fluidPage(
     h3("Abstract"),
     p("The extracellular loop 2 (ECL2) is the longest and the most diverse loop among class A G protein-coupled receptors (GPCRs). We propose a 7-cluster classification scheme of currently resolved ECL2 domains based on volume overlaps and their intermolecular interactions with the other GPCR regions."),
     h3("Reference"),
-    # p("This interactive view accompanies the paper:"),
-    p("See: A. Di Pizio et al.,",em("A Classification Model for the Second Extracellular Loop of Class A GPCRs, "),
-      "Under review."),
+    p("See: A. Nicoli, A. Dunkel, T. Giorgino, C. de Graaf, and A. Di Pizio. ",
+      em("A Classification Model for the Second Extracellular Loop of Class A GPCRs, "),
+      "Journal of Chemical Information and Modeling, 2022.",
+      a("doi:10.1021/acs.jcim.1c01056",href="https://doi.org/10.1021/acs.jcim.1c01056")
+    ),
     
     h3("Query the ECL2 clusters"),
     
@@ -43,6 +45,7 @@ ui <- fluidPage(
         )
     ),
     h3("Summary of selected GPCRs"),
+    p("Select links under the ID column to download the corresponding PDB structure. Hovering under ECL2 provides a preview."),
     tableOutput("table")
 )
 
