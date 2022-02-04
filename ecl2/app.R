@@ -6,7 +6,7 @@ load("data/summary-table.RData")
 
 st1 <- st
 cls <- sort(unique(st1$Cluster))
-
+regions <- unique(contacts$Region)
 
 
 # Define UI for application that draws a histogram
@@ -89,9 +89,10 @@ server <- function(input, output) {
                                     label="Please select a cluster") + theme_void()
             } else {
                 # csub <- contacts %>% filter(Frame>0 & Cluster=="C")
-                csub <- contacts %>% filter(Frame>0)
-                csub <- csub %>% filter(Cluster == input$selected.cluster)
-                ggplot(csub, aes(x=Region,y=Contacts,color=ID,fill=ID))+geom_boxplot(alpha=0.3)
+                contacts %>% filter(Frame>0) %>% 
+                    filter(Cluster == input$selected.cluster) %>%
+                    mutate(Region=factor(Region,levels=regions)) %>%
+                    ggplot(aes(x=Region,y=Contacts,color=ID,fill=ID))+geom_boxplot(alpha=0.3)
             }
         } else {
             if(input$selected.cluster == "All") {
@@ -99,9 +100,10 @@ server <- function(input, output) {
                                     x = 4, y = 25, size=8,
                                     label="Please select a cluster") + theme_void()
             } else {
-                csub <- contacts %>% filter(Frame==-1)
-                csub <- csub %>% filter(Cluster == input$selected.cluster)
-                ggplot(csub, aes(color=ID,y=Contacts,x=Region))+geom_point(size=3)
+                contacts %>% filter(Frame==-1) %>%
+                    filter(Cluster == input$selected.cluster) %>%
+                    mutate(Region=factor(Region,levels=regions)) %>%
+                    ggplot(aes(color=ID,y=Contacts,x=Region))+geom_point(size=3)
             }  
         }
         

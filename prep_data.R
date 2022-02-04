@@ -10,7 +10,7 @@ library(stringr)
 
 summary_table <- read_excel("original-data/summary-table_linux_AN_CORR.xlsx")
 
-regions <- c("TM1","TM2","TM3","TM4","TM5","TM6","TM7","ECL1","ECL3")
+regions <- c("TM1","TM2","ECL1","TM3","TM4","TM5","TM6","ECL3","TM7")
 
 st <- summary_table %>% 
     mutate(`Length of segment before-Cys45.50` = as.integer(`Lenght of segment before-Cys45.50`),
